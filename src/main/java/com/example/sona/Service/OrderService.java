@@ -7,7 +7,6 @@ import com.example.sona.Model.*;
 import com.example.sona.Repository.CustomerRepository;
 import com.example.sona.Repository.LineItemsRepository;
 import com.example.sona.Repository.OrderRepository;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,6 +45,24 @@ public class OrderService {
     public Order getOrderByOrderId(String orderId) {
         return orderRepository.findByOrderId(orderId);
     }
+
+    public void updateOrderStatus (UpdateOrderStatusRequest request){
+        Order order = orderRepository.findByOrderId(request.getOrderId());
+        if (order !=null){
+            order.setOrderStatus(request.getNewStatus());
+            orderRepository.save(order);
+        }
+    }
+
+    public void cancelOrder(CancelOrderResponse response){
+        Order order = orderRepository.findByOrderId(response.getOrderId());
+        if (order !=null){
+            order.setOrderStatus("Cancelled");
+            orderRepository.save(order);
+        }
+    }
+
+
 
 
 

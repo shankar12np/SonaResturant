@@ -1,3 +1,4 @@
+
 package com.example.sona.Controller;
 
 import com.example.sona.Entity.LineItems;
@@ -46,6 +47,20 @@ public class OrderController {
     public ResponseEntity<Order> findOrderByOrderId(@PathVariable String orderId) {
         Order orderData = orderService.getOrderByOrderId(orderId);
         return ResponseEntity.ok(orderData);
+    }
+
+   @PostMapping("/update-status")
+    public ResponseEntity<?>updateStatus(@RequestBody UpdateOrderStatusRequest request){
+       orderService.updateOrderStatus(request);
+      // return ResponseEntity.ok(request);
+       return new ResponseEntity<>("Order Updated",HttpStatus.CREATED);
+    }
+
+@PostMapping("/cancel-order")
+    public ResponseEntity<?> cancelOrder(@RequestBody CancelOrderResponse response){
+      orderService.cancelOrder(response);
+      return new ResponseEntity<>("Order cancelled ", HttpStatus.CREATED);
+
     }
 
 
