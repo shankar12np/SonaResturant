@@ -38,7 +38,7 @@ public class OrderService {
         return orderRepository.findAll();
     }
 
-    public List<LineItems> getAllLineItems(){
+    public List<LineItems> getAllLineItems() {
         return lineItemsRepository.findAll();
     }
 
@@ -46,24 +46,31 @@ public class OrderService {
         return orderRepository.findByOrderId(orderId);
     }
 
-    public void updateOrderStatus (UpdateOrderStatusRequest request){
+    public void updateOrderStatus(UpdateOrderStatusRequest request) {
         Order order = orderRepository.findByOrderId(request.getOrderId());
-        if (order !=null){
+        if (order != null) {
             order.setOrderStatus(request.getNewStatus());
             orderRepository.save(order);
         }
     }
 
-    public void cancelOrder(CancelOrderResponse response){
+    public void cancelOrder(CancelOrderResponse response) {
         Order order = orderRepository.findByOrderId(response.getOrderId());
-        if (order !=null){
+        if (order != null) {
             order.setOrderStatus("Cancelled");
             orderRepository.save(order);
         }
     }
 
+    public void deleteOrder(String orderId) {
+        Order order = orderRepository.findByOrderId(orderId);
+        if (order != null) {
+            orderRepository.delete(order);
+        } else {
+            throw new RuntimeException("Order does not exist");
+        }
 
-
+    }
 
 
     private Order createAndSaveOrder(CustomerRequestPOJO customerRequest) {
