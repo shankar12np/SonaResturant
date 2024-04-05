@@ -2,8 +2,6 @@ package com.example.sona.Model;
 
 import com.example.sona.Entity.Menu;
 import lombok.Data;
-import org.springframework.web.bind.annotation.PathVariable;
-
 import java.util.List;
 
 @Data
